@@ -2,11 +2,8 @@ import express, { Request, Response } from "express";
 import morgan from "morgan";
 import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize("marketpulse", "postgres", "yourpassword", {
-  host: "db",
-  port: 5432,
-  dialect: "postgres",
-});
+const DATABASE_URL = process.env.DATABASE_URL;
+const sequelize = DATABASE_URL ? new Sequelize(DATABASE_URL) : new Sequelize();
 
 sequelize
   .authenticate()
