@@ -28,7 +28,10 @@ router.post("/login", (req, res) => {
   User.findOne({ where: { email, password } })
     .then((user) => {
       if (user) {
-        const token = jwt.sign({ userId: user.id }, "secret_key");
+        const SECRET_KEY = process.env.SECRET_KEY || "123";
+        const token = jwt.sign({ userId: user.id }, SECRET_KEY, {
+          expiresIn: "1h",
+        });
         res.json({
           status: {
             code: 200,
