@@ -1,8 +1,20 @@
-import { Sequelize, DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
-const User = sequelize.define("User", {
-  // Model attributes are defined here
+interface UserInstance extends Model {
+    id: number;
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+  }
+  
+const User = sequelize.define<UserInstance>("User", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
   email: {
     type: DataTypes.STRING,
   },
@@ -11,12 +23,11 @@ const User = sequelize.define("User", {
   },
   firstName: {
     type: DataTypes.STRING,
-
   },
   lastName: {
     type: DataTypes.STRING,
   },
-  
 });
+
 
 export default User;
