@@ -1,0 +1,72 @@
+[
+    {
+        "title": "Smartphone 5G",
+        "description": "Dernier modèle de smartphone avec connectivité 5G.",
+        "price": 799.99,
+        "imageUrl": "url_to_image/smartphone.jpg",
+        "stock": 50
+    },
+    {
+        "title": "Casque Bluetooth",
+        "description": "Casque sans fil avec réduction de bruit active.",
+        "price": 199.99,
+        "imageUrl": "url_to_image/casque.jpg",
+        "stock": 30
+    },
+    {
+        "title": "Ordinateur Portable",
+        "description": "Ordinateur portable léger et puissant pour tous vos besoins.",
+        "price": 1200.00,
+        "imageUrl": "url_to_image/ordinateur.jpg",
+        "stock": 20
+    },
+    {
+        "title": "Montre Connectée",
+        "description": "Gardez un œil sur votre santé avec cette montre intelligente.",
+        "price": 299.99,
+        "imageUrl": "url_to_image/montre.jpg",
+        "stock": 40
+    },
+    {
+        "title": "Tablette Tactile",
+        "description": "Tablette haute performance pour le travail et le divertissement.",
+        "price": 549.99,
+        "imageUrl": "url_to_image/tablette.jpg",
+        "stock": 35
+    },
+    {
+        "title": "Console de Jeux",
+        "description": "Profitez des derniers jeux avec cette console de nouvelle génération.",
+        "price": 499.99,
+        "imageUrl": "url_to_image/console.jpg",
+        "stock": 25
+    },
+    {
+        "title": "Appareil Photo Numérique",
+        "description": "Capturez des moments précieux avec cet appareil photo de haute qualité.",
+        "price": 650.00,
+        "imageUrl": "url_to_image/camera.jpg",
+        "stock": 15
+    },
+    {
+        "title": "Enceinte Bluetooth",
+        "description": "Enceinte portable pour une expérience audio immersive.",
+        "price": 149.99,
+        "imageUrl": "url_to_image/enceinte.jpg",
+        "stock": 45
+    },
+    {
+        "title": "Livre Électronique",
+        "description": "Des milliers de livres dans un seul appareil léger et facile à utiliser.",
+        "price": 129.99,
+        "imageUrl": "url_to_image/ebook.jpg",
+        "stock": 60
+    },
+    {
+        "title": "Drone avec Caméra",
+        "description": "Explorez le monde vu du ciel avec ce drone équipé d'une caméra HD.",
+        "price": 359.99,
+        "imageUrl": "url_to_image/drone.jpg",
+        "stock": 18
+    }
+]
