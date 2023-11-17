@@ -1,5 +1,4 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import About from "./page/About";
 import Home from "./page/Home";
 import NotFound from "./page/NotFound";
 import Header from "./components/Header";
@@ -12,11 +11,55 @@ export default function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/products" element={<ProductList />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </Router>
     </div>
   );
+}
+
+function ProductList() {
+  return <div>ProductList</div>;
+}
+
+function ProductDetail() {
+  return <div>ProductDetail</div>;
+}
+
+function Cart() {
+  return <div>Cart</div>;
+}
+
+function Checkout() {
+  return <div>Checkout</div>;
+}
+
+function Login() {
+  return <div>Login</div>;
+}
+
+function Register() {
+  return <div>Register</div>;
+}
+
+function UserProfile() {
+  return <div>UserProfile</div>;
+}
+
+function AdminProducts() {
+  return <div>AdminProducts</div>;
+}
+
+function AdminOrders() {
+  return <div>AdminOrders</div>;
 }
