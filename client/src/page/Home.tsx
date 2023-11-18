@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import ProductCard from "../components/ProductCard";
 
-type Product = {
+export type Product = {
   id: number;
   name: string;
   description: string;
@@ -21,12 +22,11 @@ export default function Home() {
     <div>
       <h2>Les 4 derniers produits ajoutés :</h2>
       {products !== null && products.length > 0 ? (
-        products.map((product: Product) => (
-          <div key={product.id}>
-            <h3>{product.name}</h3>
-            <p>{product.description}</p>
-          </div>
-        ))
+        <ul className="products">
+          {products.map((product: Product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </ul>
       ) : (
         <p>No products available</p>
       )}
