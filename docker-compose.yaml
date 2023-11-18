@@ -4,6 +4,8 @@ services:
     build: ./client
     ports:
       - "${CLIENT_PORT}:8000"
+    environment:
+      - VITE_API_URL=http://${SERVER_HOST}:${SERVER_PORT}
     volumes:
       - type: bind
         source: ./client

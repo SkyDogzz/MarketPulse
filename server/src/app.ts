@@ -4,10 +4,11 @@ import axios from "axios";
 import sequelize from "./config/database";
 import routes from "./routes";
 import fs from "fs";
+import cors from "cors";
 
 const app = express();
 
-app.use(express.json()).use(morgan("dev")).use(routes);
+app.use(express.json()).use(morgan("dev")).use(cors()).use(routes);
 
 sequelize.authenticate();
 sequelize
