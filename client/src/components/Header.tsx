@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import useAuthStore from "../stores/authStore";
 
 export default function Header() {
+  const token = useAuthStore((state) => state.token);
   const clearToken = useAuthStore((state) => state.clearToken);
   const handleLogout = () => {
     clearToken();
@@ -16,13 +17,12 @@ export default function Header() {
           <Link to="/products">Products</Link>
           <Link to="/cart">Cart</Link>
           <Link to="/checkout">Checkout</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
-          <Link to="/profile">Profile</Link>
-          <Link to="/admin/products">Admin Products</Link>
-          <Link to="/admin/orders">Admin Orders</Link>
-
-          <button onClick={handleLogout}>Logout</button>
+          {!token && <Link to="/login">Login</Link>}
+          {!token && <Link to="/register">Register</Link>}
+          {token && <Link to="/profile">Profile</Link>}
+          {token && <Link to="/admin/products">Admin Products</Link>}
+          {token && <Link to="/admin/orders">Admin Orders</Link>}
+          {token && <button onClick={handleLogout}>Logout</button>}
         </ul>
       </nav>
     </div>
