@@ -22,4 +22,25 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/last/:limit", (req, res) => {
+  const { limit } = req.params;
+  Product.findAll({ limit: parseInt(limit), order: [["id", "DESC"]] })
+    .then((products) => {
+      res.json({
+        status: {
+          code: 200,
+          message: "Success",
+        },
+        products,
+      }); 
+    })
+    .catch((err) => {
+      console.error(err);
+      res
+        .status(500)
+        .json({ status: { code: 500, message: "Internal server error" } });
+    });
+});
+
+
 export default router;

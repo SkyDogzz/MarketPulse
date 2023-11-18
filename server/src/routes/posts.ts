@@ -22,26 +22,6 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("last/:limit", (req, res) => {
-  const { limit } = req.params;
-  Post.findAll({ limit: parseInt(limit), order: [["id", "DESC"]] })
-    .then((posts) => {
-      res.json({
-        status: {
-          code: 200,
-          message: "Success",
-        },
-        posts,
-      }); 
-    })
-    .catch((err) => {
-      console.error(err);
-      res
-        .status(500)
-        .json({ status: { code: 500, message: "Internal server error" } });
-    });
-});
-
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   Post.findByPk(id)
