@@ -1,5 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from "./page/Home";
+import ProductList from "./page/ProductList";
 import NotFound from "./page/NotFound";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -26,10 +27,6 @@ export default function App() {
       </Router>
     </div>
   );
-}
-
-function ProductList() {
-  return <div>ProductList</div>;
 }
 
 function ProductDetail() {
