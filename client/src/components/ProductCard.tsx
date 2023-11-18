@@ -1,4 +1,4 @@
-import { Product } from "../page/Home";
+import { Product } from "../types";
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
