@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
-    <Link to={`/products/${product.id}`}>
-      <li className="product-card">
-        <h3>{product.name}</h3>
-        <p>{product.description}</p>
-      </li>
-    </Link>
+    <li className="product-card">
+      <Link to={`/product/${product.id}`}>
+        <h3>{product.title}</h3>
+      </Link>
+      <p>{product.description}</p>
+    </li>
   );
 }
