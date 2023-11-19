@@ -21,5 +21,5 @@ export type Cart = {
   quantity: number;
   title: string;
   description: string;
-
+  price: number;
 };
