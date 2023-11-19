@@ -1,6 +1,7 @@
 import { Router } from "express";
 import User from "../models/user";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const router = Router();
 
@@ -24,10 +25,11 @@ router.get("/", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  const { email, password } = req.body;
-  User.findOne({ where: { email, password } })
+  const { email } = req.body;
+  User.findOne({ where: { email } })
     .then((user) => {
-      if (user) {
+      console.log(user);
+      if (user && bcrypt.compareSync(req.body.password, user.password)) {
         const SECRET_KEY = process.env.SECRET_KEY || "123";
         const token = jwt.sign({ userId: user.id }, SECRET_KEY, {
           expiresIn: "1h",
@@ -44,7 +46,7 @@ router.post("/login", (req, res) => {
         res.json({
           status: {
             code: 404,
-            message: "Not found",
+            message: "Email or password incorrect",
           },
         });
       }
@@ -59,7 +61,8 @@ router.post("/login", (req, res) => {
 
 router.post("/register", (req, res) => {
   const { email, password, firstName, lastName } = req.body;
-  User.create({ email, password, firstName, lastName })
+  const passwordHash = bcrypt.hashSync(password, 10);
+  User.create({ email, password: passwordHash, firstName, lastName })
     .then((user) => {
       res.json({
         status: {
