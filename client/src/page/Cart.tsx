@@ -40,16 +40,15 @@ export default function Cart() {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+  const handleDelete = (id: number) => {
     axios.delete(apiUrl + "/carts/" + id).then((response) => {
       console.log(response);
       setCart((prevState) => prevState.filter((item) => item.id !== id));
     });
   };
 
-  const handleAdd = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
-    console.log("Add", e.target, id);
-    axios.put(apiUrl + "/carts/add/" + id, { quantity: 1 }).then((response) => {
+  const handleAdd = (id: number) => {
+    axios.put(apiUrl + "/carts/add/" + id, { quantity: 1 }).then(() => {
       setCart((prevState) => {
         const newCart = prevState.map((item) => {
           if (item.id === id) {
@@ -65,10 +64,10 @@ export default function Cart() {
     });
   };
 
-  const handleRemove = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+  const handleRemove = (id: number) => {
     axios
       .put(apiUrl + "/carts/remove/" + id)
-      .then((response) => {
+      .then(() => {
         setCart((prevState) => {
           return prevState.reduce((newCart: CartTypes[], item) => {
             console.log(newCart, item);
@@ -87,7 +86,6 @@ export default function Cart() {
         console.error("Error removing item from cart:", error);
       });
   };
-  
 
   return (
     <div>
@@ -110,15 +108,9 @@ export default function Cart() {
                 <td>{item.description}</td>
                 <td>{item.quantity}</td>
                 <td>
-                  <button onClick={(event) => handleAdd(event, item.id)}>
-                    +
-                  </button>
-                  <button onClick={(event) => handleRemove(event, item.id)}>
-                    Remove
-                  </button>
-                  <button onClick={(event) => handleDelete(event, item.id)}>
-                    Delete
-                  </button>
+                  <button onClick={() => handleAdd(item.id)}>+</button>
+                  <button onClick={() => handleRemove(item.id)}>Remove</button>
+                  <button onClick={() => handleDelete(item.id)}>Delete</button>
                 </td>
                 <td>{item.price}</td>
               </tr>
