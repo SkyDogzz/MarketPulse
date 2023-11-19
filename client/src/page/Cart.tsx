@@ -49,10 +49,40 @@ export default function Cart() {
 
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
     console.log("Add", e.target, id);
+    axios.put(apiUrl + "/carts/add/" + id, { quantity: 1 }).then((response) => {
+      setCart((prevState) => {
+        const newCart = prevState.map((item) => {
+          if (item.id === id) {
+            return {
+              ...item,
+              quantity: item.quantity + 1,
+            };
+          }
+          return item;
+        });
+        return newCart;
+      });
+    });
   };
 
   const handleRemove = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
-    console.log("Remove", e.target, id);
+    axios
+      .put(apiUrl + "/carts/remove/" + id, { quantity: 1 })
+      .then((response) => {
+        console.log(response);
+        setCart((prevState) => {
+          const newCart = prevState.map((item) => {
+            if (item.id === id) {
+              return {
+                ...item,
+                quantity: item.quantity - 1,
+              };
+            }
+            return item;
+          });
+          return newCart;
+        });
+      });
   };
 
   return (
