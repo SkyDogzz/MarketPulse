@@ -23,18 +23,15 @@ export default function Cart() {
       .get(apiUrl + "/carts/" + user.id)
       .then(async (response) => {
         const cartItems = response.data.carts;
-        console.log(cartItems);
         const productRequests = cartItems.map((item: CartTypes) =>
           axios.get(apiUrl + "/products/" + item.productId)
         );
         const productResponses = await Promise.all(productRequests);
-        console.log(productResponses);
         const newCartItems = productResponses.map((res, index) => ({
           ...res.data.product,
           id: cartItems[index].id,
           quantity: cartItems[index].quantity,
         }));
-        console.log(newCartItems);
         setCart(newCartItems);
       })
       .catch((err) => console.log(err));
@@ -70,7 +67,6 @@ export default function Cart() {
       .then(() => {
         setCart((prevState) => {
           return prevState.reduce((newCart: CartTypes[], item) => {
-            console.log(newCart, item);
             if (item.id === id) {
               if (item.quantity > 1) {
                 newCart.push({ ...item, quantity: item.quantity - 1 });
