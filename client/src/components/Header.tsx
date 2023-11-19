@@ -16,7 +16,7 @@ export default function Header() {
         <ul>
           <Link to="/">Home</Link>
           <Link to="/products">Products</Link>
-          <Link to="/cart">Cart</Link>
+          {token && <Link to="/cart">Cart</Link>}
           <Link to="/checkout">Checkout</Link>
           {!token && <Link to="/login">Login</Link>}
           {!token && <Link to="/register">Register</Link>}
