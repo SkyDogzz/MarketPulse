@@ -7,6 +7,7 @@ interface UserInstance extends Model {
     password: string;
     firstName: string;
     lastName: string;
+    isAdmin: boolean;
   }
   
 const User = sequelize.define<UserInstance>("User", {
@@ -27,6 +28,10 @@ const User = sequelize.define<UserInstance>("User", {
   },
   lastName: {
     type: DataTypes.STRING,
+  },
+  isAdmin: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
 });
 

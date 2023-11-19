@@ -8,7 +8,6 @@ export default function populate() {
     __dirname + "/config/insertProduct.json",
     "utf8",
     (err, jsonString) => {
-      console.log("File data:", jsonString);
       if (err) {
         console.log("File read failed:", err);
         return;
@@ -25,4 +24,19 @@ export default function populate() {
       });
     }
   );
+
+  sequelize.models.User.create({
+    email: "Jhon@doe.com",
+    password: "123",
+    firstName: "Jhon",
+    lastName: "Doe",
+  });
+
+  sequelize.models.User.create({
+    email: "admin@admin.com",
+    password: "123",
+    firstName: "Admin",
+    lastName: "Admin",
+    isAdmin: true,
+  });
 }
