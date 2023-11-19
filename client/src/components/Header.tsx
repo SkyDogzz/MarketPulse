@@ -3,7 +3,7 @@ import useAuthStore from "../stores/authStore";
 
 export default function Header() {
   const token = useAuthStore((state) => state.token);
-  const clearToken = useAuthStore((state) => state.clearToken);
+  const clearToken = useAuthStore((state) => state.clearAuth);
   const handleLogout = () => {
     clearToken();
   };

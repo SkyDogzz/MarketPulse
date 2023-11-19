@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const setToken = useAuthStore((state) => state.setToken);
+  const setAuth = useAuthStore((state) => state.setAuth);
   const token = useAuthStore((state) => state.token);
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ export default function Login() {
 
     try {
       const res = await axios.post(apiURL + "/users/login", { email, password });
-      setToken(res.data.token);
+      setAuth(res.data.token, res.data.user);
     } catch (err) {
       console.error(err);
     }
