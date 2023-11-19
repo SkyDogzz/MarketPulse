@@ -1,5 +1,6 @@
 import fs from "fs";
 import sequelize from "./config/database";
+import bcrypt from "bcrypt";
 
 export default function populate() {
   console.log("Populating database...");
@@ -26,15 +27,15 @@ export default function populate() {
   );
 
   sequelize.models.User.create({
-    email: "Jhon@doe.com",
-    password: "123",
+    email: "jhon@doe.com",
+    password: bcrypt.hashSync("123", 10),
     firstName: "Jhon",
     lastName: "Doe",
   });
 
   sequelize.models.User.create({
     email: "admin@admin.com",
-    password: "123",
+    password: bcrypt.hashSync("admin", 10),
     firstName: "Admin",
     lastName: "Admin",
     isAdmin: true,
