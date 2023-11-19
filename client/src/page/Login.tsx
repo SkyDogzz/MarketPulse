@@ -33,6 +33,7 @@ export default function Login() {
         password,
       });
       setAuth(res.data.token, res.data.user);
+      console.log(res.data);
     } catch (err) {
       console.error(err);
     }

@@ -1,7 +1,16 @@
+import { useEffect } from "react";
 import useAuthStore from "../stores/authStore";
+import { useNavigate } from "react-router-dom";
 
 export default function UserProfile() {
+  const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  })
 
   return (
     <div>

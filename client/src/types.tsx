@@ -11,6 +11,7 @@ export type User = {
   lastName: string;
   createdAt: string;
   updatedAt: string;
+  isAdmin: boolean;
 };
 
 export type Cart = {
