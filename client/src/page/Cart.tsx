@@ -11,41 +11,49 @@ export default function Cart() {
 
   const [cart, setCart] = useState<CartTypes[]>([]);
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     if (!user) {
       navigate("/login");
       return;
     }
 
-    const apiUrl = import.meta.env.VITE_API_URL;
     axios
       .get(apiUrl + "/carts/" + user.id)
       .then(async (response) => {
         const cartItems = response.data.carts;
+        console.log(cartItems);
         const productRequests = cartItems.map((item: CartTypes) =>
           axios.get(apiUrl + "/products/" + item.productId)
         );
         const productResponses = await Promise.all(productRequests);
+        console.log(productResponses);
         const newCartItems = productResponses.map((res, index) => ({
           ...res.data.product,
+          id: cartItems[index].id,
           quantity: cartItems[index].quantity,
         }));
+        console.log(newCartItems);
         setCart(newCartItems);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log("Remove", e.target);
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+    axios.delete(apiUrl + "/carts/" + id).then((response) => {
+      console.log(response);
+      setCart((prevState) => prevState.filter((item) => item.id !== id));
+    });
   };
 
-  const handleAdd = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log("Add", e.target);
-  }
+  const handleAdd = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+    console.log("Add", e.target, id);
+  };
 
-  const handleRemove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log("Remove", e.target);
-  }
+  const handleRemove = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+    console.log("Remove", e.target, id);
+  };
 
   return (
     <div>
@@ -68,9 +76,15 @@ export default function Cart() {
                 <td>{item.description}</td>
                 <td>{item.quantity}</td>
                 <td>
-                  <button onClick={handleAdd}>+</button>
-                  <button onClick={handleRemove}>-</button>
-                  <button onClick={handleDelete}>Delete</button>
+                  <button onClick={(event) => handleAdd(event, item.id)}>
+                    +
+                  </button>
+                  <button onClick={(event) => handleRemove(event, item.id)}>
+                    Remove
+                  </button>
+                  <button onClick={(event) => handleDelete(event, item.id)}>
+                    Delete
+                  </button>
                 </td>
                 <td>{item.price}</td>
               </tr>
@@ -80,7 +94,9 @@ export default function Cart() {
       ) : (
         <p>Your cart is empty.</p>
       )}
-      <Link to="/checkout" state={{ cart: cart }}>Checkout</Link>
+      <Link to="/checkout" state={{ cart: cart }}>
+        Checkout
+      </Link>
     </div>
   );
 }
