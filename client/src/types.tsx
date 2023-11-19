@@ -12,3 +12,9 @@ export type User = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type Cart = {
+  id: number;
+  userId: number;
+  productId: number;
+};

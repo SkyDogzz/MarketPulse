@@ -32,7 +32,6 @@ export default function Login() {
         email,
         password,
       });
-      console.log(res);
       setAuth(res.data.token, res.data.user);
     } catch (err) {
       console.error(err);

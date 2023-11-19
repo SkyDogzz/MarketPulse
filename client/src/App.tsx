@@ -4,6 +4,7 @@ import ProductList from "./page/ProductList";
 import ProductDetail from "./page/ProductDetail";
 import Login from "./page/Login";
 import Register from "./page/Register";
+import Cart from "./page/Cart";
 import NotFound from "./page/NotFound";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -31,10 +32,6 @@ export default function App() {
       </Router>
     </div>
   );
-}
-
-function Cart() {
-  return <div>Cart</div>;
 }
 
 function Checkout() {
