@@ -40,4 +40,30 @@ export default function populate() {
     lastName: "Admin",
     isAdmin: true,
   });
+
+  const cart = [
+    {
+      userId: 1,
+      productId: 1,
+      quantity: 2,
+    },
+    {
+      userId: 1,
+      productId: 2,
+      quantity: 1,
+    },
+    {
+      userId: 1,
+      productId: 3,
+      quantity: 1,
+    },
+  ];
+
+  cart.map((item) => {
+    sequelize.models.Cart.create({
+      userId: item.userId,
+      productId: item.productId,
+      quantity: item.quantity,
+    });
+  });
 }

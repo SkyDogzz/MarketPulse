@@ -5,6 +5,7 @@ interface CartInstance extends Model {
   id: number;
   userId: number;
   productId: number;
+  quantity: number;
 }
 
 const Cart = sequelize.define<CartInstance>("Cart", {
@@ -17,6 +18,9 @@ const Cart = sequelize.define<CartInstance>("Cart", {
         type: DataTypes.INTEGER,
     },
     productId: {
+        type: DataTypes.INTEGER,
+    },
+    quantity: {
         type: DataTypes.INTEGER,
     },
 });
