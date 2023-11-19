@@ -14,18 +14,6 @@ sequelize.authenticate();
 sequelize
   .sync({ force: true })
   .then(() => {
-    axios.get("https://jsonplaceholder.typicode.com/posts").then((response) => {
-      const posts = response.data;
-      posts.map((post: any) => {
-        sequelize.models.Post.create({
-          userId: post.userId,
-          title: post.title,
-          body: post.body,
-        });
-      });
-    });
-  })
-  .then(() => {
     fs.readFile(
       __dirname + "/config/insertProduct.json",
       "utf8",
