@@ -8,22 +8,30 @@ export default function Cart() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
 
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<CartTypes[]>([]);
 
   useEffect(() => {
     if (!user) {
       navigate("/login");
+      return;
     }
 
     const apiUrl = import.meta.env.VITE_API_URL;
     axios
-      .get(apiUrl + "/carts/" + user?.id)
-      .then((response) => {
-        setCart(response.data.carts);
+      .get(apiUrl + "/carts/" + user.id)
+      .then(async (response) => {
+        const cartItems = response.data.carts;
+        const productRequests = cartItems.map((item: CartTypes) =>
+          axios.get(apiUrl + "/products/" + item.productId)
+        );
+        const productResponses = await Promise.all(productRequests);
+        const newCartItems = productResponses.map((res, index) => ({
+          ...res.data.product,
+          quantity: cartItems[index].quantity,
+        }));
+        setCart(newCartItems);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -33,8 +41,9 @@ export default function Cart() {
         cart.map((item: CartTypes) => {
           return (
             <div key={item.id}>
-              <h3>{item.userId}</h3>
-              <h3>{item.productId}</h3>
+              <h2>{item.title}</h2>
+              <p>{item.description}</p>
+              <p>{item.quantity}</p>
             </div>
           );
         })}
