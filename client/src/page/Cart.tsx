@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Cart as CartTypes } from "../types";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ export default function Cart() {
       })
       .catch((err) => console.log(err));
   }, []);
+  console.log(cart)
 
   return (
     <div>
@@ -44,9 +46,11 @@ export default function Cart() {
               <h2>{item.title}</h2>
               <p>{item.description}</p>
               <p>{item.quantity}</p>
+              <p>{item.price}</p>
             </div>
           );
         })}
+        <Link to="/checkout" state={{cart: cart}}>Checkout</Link>
     </div>
   );
 }
