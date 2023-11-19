@@ -34,23 +34,53 @@ export default function Cart() {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log(cart)
+
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log("Remove", e.target);
+  };
+
+  const handleAdd = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log("Add", e.target);
+  }
+
+  const handleRemove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log("Remove", e.target);
+  }
 
   return (
     <div>
       <h1>Cart</h1>
-      {cart &&
-        cart.map((item: CartTypes) => {
-          return (
-            <div key={item.id}>
-              <h2>{item.title}</h2>
-              <p>{item.description}</p>
-              <p>{item.quantity}</p>
-              <p>{item.price}</p>
-            </div>
-          );
-        })}
-        <Link to="/checkout" state={{cart: cart}}>Checkout</Link>
+      {cart && cart.length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Actions</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cart.map((item: CartTypes) => (
+              <tr key={item.id}>
+                <td>{item.title}</td>
+                <td>{item.description}</td>
+                <td>{item.quantity}</td>
+                <td>
+                  <button onClick={handleAdd}>+</button>
+                  <button onClick={handleRemove}>-</button>
+                  <button onClick={handleDelete}>Delete</button>
+                </td>
+                <td>{item.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>Your cart is empty.</p>
+      )}
+      <Link to="/checkout" state={{ cart: cart }}>Checkout</Link>
     </div>
   );
 }
