@@ -1,18 +1,8 @@
+@import '../abstracts/variables';
+
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Work+Sans:wght@200;300;400;500;600;700;800;900&display=swap');
 
-$font-family-base: 'Merriweather', sans-serif;
-$font-family-heading: 'Work San', sans-serif;
-
-$font-size-base: 1rem; 
-$font-size-large: 1.25rem; 
-$font-size-small: 0.875rem; 
-
-$line-height-base: 1.5;
-
-$text-color: #333;
-$text-color-muted: #666;
-
-body {
+body, button {
     font-family: $font-family-base;
     font-size: $font-size-base;
     line-height: $line-height-base;
