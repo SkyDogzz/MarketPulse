@@ -2,14 +2,19 @@ import axios from "axios";
 import useAuthStore from "../stores/authStore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useSuccessStore from "../stores/successStore.tsx";
 
 export default function Login() {
+  const setSuccess = useSuccessStore((state) => state.setSuccess);
+  const success = useSuccessStore((state) => state.success);
+
   const setAuth = useAuthStore((state) => state.setAuth);
   const token = useAuthStore((state) => state.token);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
+      setSuccess("You have successfully logged in!");
       navigate("/");
     }
   }, [token, navigate]);
@@ -23,7 +28,10 @@ export default function Login() {
     const apiURL = import.meta.env.VITE_API_URL;
 
     try {
-      const res = await axios.post(apiURL + "/users/login", { email, password });
+      const res = await axios.post(apiURL + "/users/login", {
+        email,
+        password,
+      });
       console.log(res);
       setAuth(res.data.token, res.data.user);
     } catch (err) {
@@ -34,6 +42,7 @@ export default function Login() {
   return (
     <div>
       <h1>Login</h1>
+      <p>{success}</p>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email</label>

@@ -2,9 +2,12 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import { Product } from "../types";
+import useSuccessStore from "../stores/successStore";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
+
+  const success = useSuccessStore((state) => state.success);
 
   useEffect(() => {
     const apiURL = import.meta.env.VITE_API_URL;
@@ -16,6 +19,7 @@ export default function Home() {
   return (
     <div>
       <h2>The last 4 products added:</h2>
+      <p>{success}</p>
       {products !== null && products.length > 0 ? (
         <ul className="products">
           {products.map((product: Product) => (

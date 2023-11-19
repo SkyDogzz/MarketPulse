@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import useSuccessStore from "../stores/successStore";
 
 export default function Register() {
+  const setSuccess = useSuccessStore((state) => state.setSuccess);
   const navigate = useNavigate();
 
   const handleSubmit = (formData: React.FormEvent<HTMLFormElement>) => {
@@ -21,7 +23,10 @@ export default function Register() {
         lastName,
       })
       .then((res) => {
-        if (res.data.status.code === 200) navigate("/login");
+        if (res.data.status.code === 200) {
+          setSuccess("You have successfully registered!");
+          navigate("/login");
+        }
         else console.log(res.data.status);
       })
       .catch((err) => {
