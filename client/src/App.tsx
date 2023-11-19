@@ -5,6 +5,7 @@ import ProductDetail from "./page/ProductDetail";
 import Login from "./page/Login";
 import Register from "./page/Register";
 import Cart from "./page/Cart";
+import Checkout from "./page/Checkout";
 import UserProfile from "./page/UserProfile";
 import AdminProducts from "./page/AdminProducts";
 import NotFound from "./page/NotFound";
@@ -34,10 +35,6 @@ export default function App() {
       </Router>
     </div>
   );
-}
-
-function Checkout() {
-  return <div>Checkout</div>;
 }
 
 function AdminOrders() {
