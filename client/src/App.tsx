@@ -6,6 +6,7 @@ import Login from "./page/Login";
 import Register from "./page/Register";
 import Cart from "./page/Cart";
 import UserProfile from "./page/UserProfile";
+import AdminProducts from "./page/AdminProducts";
 import NotFound from "./page/NotFound";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -37,10 +38,6 @@ export default function App() {
 
 function Checkout() {
   return <div>Checkout</div>;
-}
-
-function AdminProducts() {
-  return <div>AdminProducts</div>;
 }
 
 function AdminOrders() {
