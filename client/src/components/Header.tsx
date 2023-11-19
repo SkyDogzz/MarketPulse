@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <div className="header">
-      <h1>My App</h1>
+      <h1>Market pulse</h1>
       <nav>
         <ul>
           <Link to="/">Home</Link>
