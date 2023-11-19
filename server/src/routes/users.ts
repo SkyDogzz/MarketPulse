@@ -62,22 +62,34 @@ router.post("/login", (req, res) => {
 router.post("/register", (req, res) => {
   const { email, password, firstName, lastName } = req.body;
   const passwordHash = bcrypt.hashSync(password, 10);
-  User.create({ email, password: passwordHash, firstName, lastName })
-    .then((user) => {
+  User.findOne({ where: { email } }).then((user) => {
+    console.log(user);
+    if (user) {
       res.json({
         status: {
-          code: 200,
-          message: "Success",
+          code: 409,
+          message: "Email already exists",
         },
-        user,
       });
-    })
-    .catch((err) => {
-      console.error(err);
-      res
-        .status(500)
-        .json({ status: { code: 500, message: "Internal server error" } });
-    });
+    } else {
+      User.create({ email, password: passwordHash, firstName, lastName })
+        .then((user) => {
+          res.json({
+            status: {
+              code: 200,
+              message: "Success",
+            },
+            user,
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+          res
+            .status(500)
+            .json({ status: { code: 500, message: "Internal server error" } });
+        });
+    }
+  });
 });
 
 router.put("/:id", (req, res) => {

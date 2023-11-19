@@ -24,6 +24,7 @@ export default function Login() {
 
     try {
       const res = await axios.post(apiURL + "/users/login", { email, password });
+      console.log(res);
       setAuth(res.data.token, res.data.user);
     } catch (err) {
       console.error(err);

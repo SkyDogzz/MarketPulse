@@ -3,6 +3,7 @@ import Home from "./page/Home";
 import ProductList from "./page/ProductList";
 import ProductDetail from "./page/ProductDetail";
 import Login from "./page/Login";
+import Register from "./page/Register";
 import NotFound from "./page/NotFound";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -40,9 +41,6 @@ function Checkout() {
   return <div>Checkout</div>;
 }
 
-function Register() {
-  return <div>Register</div>;
-}
 
 function UserProfile() {
   return <div>UserProfile</div>;
