@@ -48,13 +48,13 @@ export default function populate() {
       quantity: 2,
     },
     {
-      userId: 1,
+      userId: 2,
       productId: 2,
       quantity: 1,
     },
     {
       userId: 1,
-      productId: 3,
+      productId: 5,
       quantity: 1,
     },
   ];

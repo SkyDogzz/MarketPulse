@@ -23,4 +23,23 @@ router.get("/:userId", (req, res) => {
     });
 });
 
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  Cart.destroy({ where: { id } })
+    .then(() => {
+      res.json({
+        status: {
+          code: 200,
+          message: "Success",
+        },
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res
+        .status(500)
+        .json({ status: { code: 500, message: "Internal server error" } });
+    });
+});
+
 export default router;
