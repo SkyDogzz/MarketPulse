@@ -42,4 +42,46 @@ router.delete("/:id", (req, res) => {
     });
 });
 
+router.put("/add/:id", (req, res) => {
+  const { id } = req.params;
+  Cart.findByPk(id)
+    .then((cart) => {
+      cart!.update({ quantity: cart!.quantity + 1 });
+      res.json({
+        status: {
+          code: 200,
+          message: "Success",
+        },
+        cart,
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res
+        .status(500)
+        .json({ status: { code: 500, message: "Internal server error" } });
+    });
+});
+
+router.put("/remove/:id", (req, res) => {
+  const { id } = req.params;
+  Cart.findByPk(id)
+    .then((cart) => {
+      cart!.update({ quantity: cart!.quantity - 1 });
+      res.json({
+        status: {
+          code: 200,
+          message: "Success",
+        },
+        cart,
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res
+        .status(500)
+        .json({ status: { code: 500, message: "Internal server error" } });
+    });
+});
+
 export default router;
