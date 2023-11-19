@@ -67,23 +67,27 @@ export default function Cart() {
 
   const handleRemove = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
     axios
-      .put(apiUrl + "/carts/remove/" + id, { quantity: 1 })
+      .put(apiUrl + "/carts/remove/" + id)
       .then((response) => {
-        console.log(response);
         setCart((prevState) => {
-          const newCart = prevState.map((item) => {
+          return prevState.reduce((newCart: CartTypes[], item) => {
+            console.log(newCart, item);
             if (item.id === id) {
-              return {
-                ...item,
-                quantity: item.quantity - 1,
-              };
+              if (item.quantity > 1) {
+                newCart.push({ ...item, quantity: item.quantity - 1 });
+              }
+            } else {
+              newCart.push(item);
             }
-            return item;
-          });
-          return newCart;
+            return newCart;
+          }, []);
         });
+      })
+      .catch((error) => {
+        console.error("Error removing item from cart:", error);
       });
   };
+  
 
   return (
     <div>

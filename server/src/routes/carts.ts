@@ -67,6 +67,16 @@ router.put("/remove/:id", (req, res) => {
   const { id } = req.params;
   Cart.findByPk(id)
     .then((cart) => {
+      if (cart!.quantity === 1) {
+        res.json({
+          status: {
+            code: 200,
+            message: "Success",
+          },
+          cart,
+        });
+        return cart!.destroy();
+      }
       cart!.update({ quantity: cart!.quantity - 1 });
       res.json({
         status: {
