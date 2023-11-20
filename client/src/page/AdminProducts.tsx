@@ -24,17 +24,20 @@ export default function AdminProducts() {
   }, []);
 
   const handleDelete = (id: number) => {
-    console.log(id);
-    axios
-      .delete(apiUrl + "/products/" + id, {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        setProducts((prevState) => prevState.filter((item) => item.id !== id));
-      });
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      axios
+        .delete(apiUrl + "/products/" + id, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          setProducts((prevState) =>
+            prevState.filter((item) => item.id !== id)
+          );
+        });
+    }
   };
 
   return (
