@@ -26,8 +26,7 @@ export default function Register() {
         if (res.data.status.code === 200) {
           setSuccess("You have successfully registered!");
           navigate("/login");
-        }
-        else console.log(res.data.status);
+        } else console.log(res.data.status);
       })
       .catch((err) => {
         console.error(err);
@@ -35,26 +34,48 @@ export default function Register() {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="auth-container">
+      <h1 className="auth-title">Register</h1>
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <div className="form-group">
           <label htmlFor="email">Email</label>
-          <input type="email" id="email" name="email" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            className="form-control"
+          />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            className="form-control"
+          />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="firstName">First Name</label>
-          <input type="text" id="firstName" name="firstName" />
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            className="form-control"
+          />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="lastName">Last Name</label>
-          <input type="text" id="lastName" name="lastName" />
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            className="form-control"
+          />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" className="auth-button">
+          Register
+        </button>
       </form>
     </div>
   );

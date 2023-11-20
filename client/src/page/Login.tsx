@@ -39,20 +39,21 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <p>{success}</p>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="auth-container">
+      <h1 className="auth-title">Login</h1>
+      <p className="auth-message">{success}</p>
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <div className="form-group">
           <label htmlFor="email">Email</label>
-          <input type="email" id="email" name="email" />
+          <input type="email" id="email" name="email" className="form-control" />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" />
+          <input type="password" id="password" name="password" className="form-control" />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" className="auth-button">Login</button>
       </form>
     </div>
   );
+  
 }
