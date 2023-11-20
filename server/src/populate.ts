@@ -1,6 +1,36 @@
 import fs from "fs";
 import sequelize from "./config/database";
 import bcrypt from "bcrypt";
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+type User = {
+  email: string;
+  firstName: string;
+  lastName: string;
+};
+
+async function createStripeUser(user: User) {
+  try {
+    const existingUser = await sequelize.models.User.findOne({
+      where: { email: user.email },
+    });
+
+    if (existingUser) {
+      return null;
+    }
+
+    const stripeCustomer = await stripe.customers.create({
+      email: user.email,
+      name: user.firstName + " " + user.lastName,
+      description: "Marketplace user",
+    });
+
+    return stripeCustomer;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 export default function populate() {
   console.log("Populating database...");
@@ -26,20 +56,36 @@ export default function populate() {
     }
   );
 
-  sequelize.models.User.create({
-    email: "jhon@doe.com",
-    password: bcrypt.hashSync("123", 10),
-    firstName: "Jhon",
-    lastName: "Doe",
-  });
+  const users = [
+    {
+      email: "jhon@doe.com",
+      password: bcrypt.hashSync("123", 10),
+      firstName: "Jhon",
+      lastName: "Doe",
+    },
+    {
+      email: "admin@admin.com",
+      password: bcrypt.hashSync("admin", 10),
+      firstName: "Admin",
+      lastName: "Admin",
+      isAdmin: true,
+    },
+  ];
 
-  sequelize.models.User.create({
-    email: "admin@admin.com",
-    password: bcrypt.hashSync("admin", 10),
-    firstName: "Admin",
-    lastName: "Admin",
-    isAdmin: true,
-  });
+  users.map((user) => {
+    sequelize.models.User.create({
+      email: user.email,
+      password: user.password,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      isAdmin: user?.isAdmin,
+    });
+    createStripeUser({
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    });
+  })
 
   const cart = [
     {
