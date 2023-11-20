@@ -90,4 +90,42 @@ router.delete("/:id", (req, res) => {
   });
 });
 
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const { title, price, description, imageUrl } = req.body;
+  const token = req.headers.authorization || "";
+
+  console.log(req.body);
+
+  jwt.verify(token, process.env.SECRET_KEY || "123", (err, decoded) => {
+    if (err) {
+      res.status(401).json({ status: { code: 401, message: "Unauthorized" } });
+    } else {
+      Product.findByPk(id).then((product) => {
+        product!
+          .update({
+            title,
+            price,
+            description,
+            imageUrl,
+          })
+          .then(() => {
+            res.json({
+              status: {
+                code: 200,
+                message: "Success",
+              },
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            res.status(500).json({
+              status: { code: 500, message: "Internal server error" },
+            });
+          });
+      });
+    }
+  });
+});
+
 export default router;

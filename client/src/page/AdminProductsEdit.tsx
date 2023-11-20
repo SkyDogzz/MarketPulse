@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Product } from "../types";
+import useAuthStore from "../stores/authStore";
 
 export default function AdminProductsEdit() {
   const apiURL = import.meta.env.VITE_API_URL;
   const id = useParams().id;
   const [product, setProduct] = useState<Product | null>(null);
+  const token = useAuthStore((state) => state.token);
 
   useEffect(() => {
     axios.get(`${apiURL}/products/` + id).then((res) => {
@@ -25,10 +27,23 @@ export default function AdminProductsEdit() {
     }));
   };
 
+  const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    axios
+      .put(`${apiURL}/products/` + id, product, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
   return (
     <div className="admin-products-edit">
       {product !== null ? (
-        <form>
+        <form onSubmit={handleUpdate}>
           <div className="form-group">
             <label htmlFor="title">Title</label>
             <input
@@ -72,7 +87,9 @@ export default function AdminProductsEdit() {
               onChange={handleChange}
             />
           </div>
-          <button className="btn btn-primary">Update</button>
+          <button type="submit" className="btn btn-primary">
+            Update
+          </button>
         </form>
       ) : (
         <p className="product-detail-info">No products available</p>
