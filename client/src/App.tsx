@@ -8,6 +8,7 @@ import Cart from "./page/Cart";
 import Checkout from "./page/Checkout";
 import UserProfile from "./page/UserProfile";
 import AdminProducts from "./page/AdminProducts";
+import AdminProductsEdit from "./page/AdminProductsEdit";
 import NotFound from "./page/NotFound";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/admin/products" element={<AdminProducts />} />
+            <Route path="/admin/products/:id" element={<AdminProductsEdit />} />
             <Route path="/admin/orders" element={<AdminOrders />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -68,7 +68,9 @@ export default function AdminProducts() {
                   >
                     Delete
                   </button>
-                  <button className="cart-button delete">Edit</button>
+                  <button className="cart-button delete"
+                    onClick={() => navigate(`/admin/products/${product.id}`)}
+                  >Edit</button>
                 </td>
               </tr>
             ))}
