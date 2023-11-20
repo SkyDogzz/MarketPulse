@@ -84,10 +84,10 @@ export default function Cart() {
   };
 
   return (
-    <div>
-      <h1>Cart</h1>
+    <div className="cart-container">
+      <h1 className="cart-title">Cart</h1>
       {cart && cart.length > 0 ? (
-        <table>
+        <table className="cart-table">
           <thead>
             <tr>
               <th>Title</th>
@@ -104,19 +104,34 @@ export default function Cart() {
                 <td>{item.description}</td>
                 <td>{item.quantity}</td>
                 <td>
-                  <button onClick={() => handleAdd(item.id)}>+</button>
-                  <button onClick={() => handleRemove(item.id)}>Remove</button>
-                  <button onClick={() => handleDelete(item.id)}>Delete</button>
+                  <button
+                    className="cart-button add"
+                    onClick={() => handleAdd(item.id)}
+                  >
+                    Add one
+                  </button>
+                  <button
+                    className="cart-button remove"
+                    onClick={() => handleRemove(item.id)}
+                  >
+                    Remove one
+                  </button>
+                  <button
+                    className="cart-button delete"
+                    onClick={() => handleDelete(item.id)}
+                  >
+                    Delete
+                  </button>
                 </td>
-                <td>{item.price}</td>
+                <td>${item.price}</td>
               </tr>
             ))}
           </tbody>
         </table>
       ) : (
-        <p>Your cart is empty.</p>
+        <p className="cart-empty">Your cart is empty.</p>
       )}
-      <Link to="/checkout" state={{ cart: cart }}>
+      <Link className="cart-checkout" to="/checkout" state={{ cart: cart }}>
         Checkout
       </Link>
     </div>
