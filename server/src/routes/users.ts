@@ -111,9 +111,11 @@ router.put("/:id", (req, res) => {
         },
         user,
       });
+      return user;
     })
-    .then(() => {
-      updateStripeUser({ id, email, firstName, lastName });
+    .then((user) => {
+
+      updateStripeUser({ email: user?.dataValues?.email, firstName: user?.dataValues?.firstName, lastName: user?.dataValues?.lastName });
     })
     .catch((err) => {
       console.error(err);
