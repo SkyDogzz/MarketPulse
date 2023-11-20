@@ -17,41 +17,43 @@ export default function AdminProducts() {
 
     const apiUrl = import.meta.env.VITE_API_URL;
     axios.get(`${apiUrl}/products`).then((res) => {
-        setProducts(res.data.products);
+      setProducts(res.data.products);
     });
   }, []);
   console.log(products);
 
   return (
-    <div>
-      <h1>Admin Products</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-        {products.map((product) => (
-          <tr key={product.id}>
-            <td>{product.id}</td>
-            <td>{product.title}</td>
-            <td>{product.description}</td>
-            <td>{product.price}</td>
-            <td>
-              <button>Delete</button>
-              <button>Edit</button>
-            </td>
-          </tr>
-        ))}
-        </tbody>
-      </table>
+    <div className="cart-container">
+      <h1 className="cart-title">Admin Products</h1>
+      {products && products.length > 0 ? (
+        <table className="cart-table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product.id}>
+                <td>{product.id}</td>
+                <td>{product.title}</td>
+                <td>{product.description}</td>
+                <td>{product.price}</td>
+                <td>
+                  <button className="cart-button remove">Delete</button>
+                  <button className="cart-button delete">Edit</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p className="cart-empty">No products available</p>
+      )}
     </div>
   );
-
-
 }
