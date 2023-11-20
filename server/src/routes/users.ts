@@ -2,6 +2,7 @@ import { Router } from "express";
 import User from "../models/user";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { createStripeUser, updateStripeUser } from "../services/stripe";
 
 const router = Router();
 
@@ -82,6 +83,9 @@ router.post("/register", (req, res) => {
             user,
           });
         })
+        .then(() => {
+          createStripeUser({ email, firstName, lastName });
+        })
         .catch((err) => {
           console.error(err);
           res
@@ -107,6 +111,9 @@ router.put("/:id", (req, res) => {
         },
         user,
       });
+    })
+    .then(() => {
+      updateStripeUser({ id, email, firstName, lastName });
     })
     .catch((err) => {
       console.error(err);
