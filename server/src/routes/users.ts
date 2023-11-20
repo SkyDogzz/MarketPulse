@@ -10,22 +10,26 @@ router.get("/", (req, res) => {
   const token = req.headers.authorization || "";
 
   jwt.verify(token, process.env.SECRET_KEY || "123", (err, decoded) => {
-    User.findAll()
-      .then((users) => {
-        res.json({
-          status: {
-            code: 200,
-            message: "Success",
-          },
-          users,
+    if (err) {
+      res.status(401).json({ status: { code: 401, message: "Unauthorized" } });
+    } else {
+      User.findAll()
+        .then((users) => {
+          res.json({
+            status: {
+              code: 200,
+              message: "Success",
+            },
+            users,
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+          res
+            .status(500)
+            .json({ status: { code: 500, message: "Internal server error" } });
         });
-      })
-      .catch((err) => {
-        console.error(err);
-        res
-          .status(500)
-          .json({ status: { code: 500, message: "Internal server error" } });
-      });
+    }
   });
 });
 
@@ -106,33 +110,37 @@ router.put("/:id", (req, res) => {
   const token = req.headers.authorization || "";
 
   jwt.verify(token, process.env.SECRET_KEY || "123", (err, decoded) => {
-    User.update({ email, password, firstName, lastName }, { where: { id } })
-      .then(() => {
-        return User.findByPk(id);
-      })
-      .then((user) => {
-        res.json({
-          status: {
-            code: 200,
-            message: "Success",
-          },
-          user,
+    if (err) {
+      res.status(401).json({ status: { code: 401, message: "Unauthorized" } });
+    } else {
+      User.update({ email, password, firstName, lastName }, { where: { id } })
+        .then(() => {
+          return User.findByPk(id);
+        })
+        .then((user) => {
+          res.json({
+            status: {
+              code: 200,
+              message: "Success",
+            },
+            user,
+          });
+          return user;
+        })
+        .then((user) => {
+          updateStripeUser({
+            email: user?.dataValues?.email,
+            firstName: user?.dataValues?.firstName,
+            lastName: user?.dataValues?.lastName,
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+          res
+            .status(500)
+            .json({ status: { code: 500, message: "Internal server error" } });
         });
-        return user;
-      })
-      .then((user) => {
-        updateStripeUser({
-          email: user?.dataValues?.email,
-          firstName: user?.dataValues?.firstName,
-          lastName: user?.dataValues?.lastName,
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-        res
-          .status(500)
-          .json({ status: { code: 500, message: "Internal server error" } });
-      });
+    }
   });
 });
 
