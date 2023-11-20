@@ -8,7 +8,7 @@ export default function Checkout() {
   const user = useAuthStore((state) => state.user);
   const location = useLocation();
   const [price, setPrice] = useState(0);
-  
+
   const [paymentDetails, setPaymentDetails] = useState({
     cardNumber: "",
     cardHolder: "",
@@ -30,7 +30,6 @@ export default function Checkout() {
     }
   }, []);
 
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setPaymentDetails((prevState) => ({
@@ -45,52 +44,58 @@ export default function Checkout() {
   };
 
   return (
-    <div>
-      <h1>Checkout</h1>
-      <p>Total Price: {price}</p>
+    <div className="checkout-container">
+      <h1 className="checkout-title">Checkout</h1>
+      <p className="checkout-total">Total Price: {price}</p>
 
-      <form onSubmit={handleSubmit}>
-        <label>
-          Card Number:
+      <form className="checkout-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Card Number:</label>
           <input
             type="text"
             name="cardNumber"
+            className="form-control"
             value={paymentDetails.cardNumber}
             onChange={handleInputChange}
           />
-        </label>
-        <br />
-        <label>
-          Card Holder:
+        </div>
+
+        <div className="form-group">
+          <label>Card Holder:</label>
           <input
             type="text"
             name="cardHolder"
+            className="form-control"
             value={paymentDetails.cardHolder}
             onChange={handleInputChange}
           />
-        </label>
-        <br />
-        <label>
-          Expiration Date:
+        </div>
+
+        <div className="form-group">
+          <label>Expiration Date:</label>
           <input
             type="text"
             name="expirationDate"
+            className="form-control"
             value={paymentDetails.expirationDate}
             onChange={handleInputChange}
           />
-        </label>
-        <br />
-        <label>
-          CVV:
+        </div>
+
+        <div className="form-group">
+          <label>CVV:</label>
           <input
             type="text"
             name="cvv"
+            className="form-control"
             value={paymentDetails.cvv}
             onChange={handleInputChange}
           />
-        </label>
-        <br />
-        <button type="submit">Submit Payment</button>
+        </div>
+
+        <button className="submit-button" type="submit">
+          Submit Payment
+        </button>
       </form>
     </div>
   );
