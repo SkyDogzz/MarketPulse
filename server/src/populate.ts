@@ -11,12 +11,12 @@ type User = {
 
 async function createStripeUser(user: User) {
   try {
-    const existingUser = await sequelize.models.User.findOne({
-      where: { email: user.email },
+    const existingUser = await stripe.customers.list({
+      email: user.email,
     });
 
-    if (existingUser) {
-      return null;
+    if (existingUser.data.length > 0) {
+      return existingUser.data[0];
     }
 
     const stripeCustomer = await stripe.customers.create({
