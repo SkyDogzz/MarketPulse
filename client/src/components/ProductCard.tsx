@@ -2,7 +2,6 @@ import { Product } from "../types";
 import { Link } from "react-router-dom";
 
 export default function ProductCard({ product }: { product: Product }) {
-  console.log(product);
 
   return (
     <li className="product-card">

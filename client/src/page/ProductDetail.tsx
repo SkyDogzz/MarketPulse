@@ -7,6 +7,8 @@ export default function ProductDetail() {
   const [product, setProduct] = useState<Product | null>(null);
   const { id } = useParams();
 
+  console.log(product);
+
   useEffect(() => {
     const apiURL = import.meta.env.VITE_API_URL;
     axios.get(`${apiURL}/products/` + id).then((res) => {
@@ -15,16 +17,22 @@ export default function ProductDetail() {
   }, []);
 
   return (
-    <div>
-      <h2>Product Detail:</h2>
+    <div className="product-detail">
       {product !== null ? (
         <div>
-          <h3>{product.title}</h3>
-          <p>{product.description}</p>
+          <h2 className="product-detail-title">{product.title}</h2>
+          <img 
+            className="product-detail-image" 
+            src={product.imageUrl} 
+            alt={product.title} 
+          />
+          <p className="product-detail-description">{product.description}</p>
+          <p className="product-detail-price">Price: ${product.price}</p>
         </div>
       ) : (
-        <p>No products available</p>
+        <p className="product-detail-info">No products available</p>
       )}
     </div>
   );
+  
 }
