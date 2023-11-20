@@ -7,24 +7,39 @@ import { Product } from "../types";
 export default function AdminProducts() {
   const navigate = useNavigate();
   const isAdmin = useAuthStore((state) => state.user?.isAdmin);
+  const token = useAuthStore((state) => state.token);
 
   const [products, setProducts] = useState<Product[]>([]);
+
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (!isAdmin) {
       navigate("/");
     }
 
-    const apiUrl = import.meta.env.VITE_API_URL;
     axios.get(`${apiUrl}/products`).then((res) => {
       setProducts(res.data.products);
     });
   }, []);
-  console.log(products);
+
+  const handleDelete = (id: number) => {
+    console.log(id);
+    axios
+      .delete(apiUrl + "/products/" + id, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setProducts((prevState) => prevState.filter((item) => item.id !== id));
+      });
+  };
 
   return (
     <div className="cart-container">
-      <h1 className="cart-title">Admin Products</h1>
+      <h1 className="cart-title">All Products</h1>
       {products && products.length > 0 ? (
         <table className="cart-table">
           <thead>
@@ -44,7 +59,12 @@ export default function AdminProducts() {
                 <td>{product.description}</td>
                 <td>{product.price}</td>
                 <td>
-                  <button className="cart-button remove">Delete</button>
+                  <button
+                    className="cart-button remove"
+                    onClick={() => handleDelete(product.id)}
+                  >
+                    Delete
+                  </button>
                   <button className="cart-button delete">Edit</button>
                 </td>
               </tr>
