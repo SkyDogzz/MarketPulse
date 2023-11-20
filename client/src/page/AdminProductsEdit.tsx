@@ -42,8 +42,8 @@ export default function AdminProductsEdit() {
 
   return (
     <div className="admin-products-edit">
-      {product !== null ? (
-        <form onSubmit={handleUpdate}>
+    {product !== null ? (
+      <form onSubmit={handleUpdate} className="product-edit-form">
           <div className="form-group">
             <label htmlFor="title">Title</label>
             <input
@@ -92,7 +92,7 @@ export default function AdminProductsEdit() {
           </button>
         </form>
       ) : (
-        <p className="product-detail-info">No products available</p>
+        <p className="admin-products-info">No products available</p>
       )}
     </div>
   );

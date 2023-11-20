@@ -1,0 +1,53 @@
+.admin-products-edit {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  
+    .product-edit-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+  
+      .form-group {
+        display: flex;
+        flex-direction: column;
+  
+        textarea {
+            resize: vertical;
+        }
+
+        label {
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+  
+        .form-control {
+          padding: 8px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+        }
+      }
+  
+      .btn {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+  
+        &-update {
+          background-color: #4CAF50;
+          color: white;
+  
+          &:hover {
+            background-color: darken(#4CAF50, 10%);
+          }
+        }
+      }
+    }
+  
+    .admin-products-info {
+      text-align: center;
+      color: #666;
+    }
+  }
+  
