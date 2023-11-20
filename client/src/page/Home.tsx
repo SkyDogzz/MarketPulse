@@ -17,8 +17,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <h2>The last 4 products added:</h2>
+    <div className="products-list">
+      <h2 className="products-list-title">Last products:</h2>
       <p>{success}</p>
       {products !== null && products.length > 0 ? (
         <ul className="products">

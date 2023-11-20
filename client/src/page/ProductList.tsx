@@ -14,8 +14,8 @@ export default function ProductList() {
   }, []);
 
   return (
-    <div>
-      <h2>All products:</h2>
+    <div className="products-list">
+      <h2 className="products-list-title">All products:</h2>
       {products !== null && products.length > 0 ? (
         <ul className="products">
           {products.map((product: Product) => (
