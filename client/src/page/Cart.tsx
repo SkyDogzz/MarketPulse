@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 export default function Cart() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.token);
 
   const [cart, setCart] = useState<CartTypes[]>([]);
 
@@ -20,7 +21,11 @@ export default function Cart() {
     }
 
     axios
-      .get(apiUrl + "/carts/" + user.id)
+      .get(apiUrl + "/carts/" + user.id, {
+        headers: {
+          Authorization: token,
+        },
+      })
       .then(async (response) => {
         const cartItems = response.data.carts;
         const productRequests = cartItems.map((item: CartTypes) =>
@@ -38,32 +43,49 @@ export default function Cart() {
   }, []);
 
   const handleDelete = (id: number) => {
-    axios.delete(apiUrl + "/carts/" + id).then((response) => {
-      console.log(response);
-      setCart((prevState) => prevState.filter((item) => item.id !== id));
-    });
+    axios
+      .delete(apiUrl + "/carts/" + id, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setCart((prevState) => prevState.filter((item) => item.id !== id));
+      });
   };
 
   const handleAdd = (id: number) => {
-    axios.put(apiUrl + "/carts/add/" + id, { quantity: 1 }).then(() => {
-      setCart((prevState) => {
-        const newCart = prevState.map((item) => {
-          if (item.id === id) {
-            return {
-              ...item,
-              quantity: item.quantity + 1,
-            };
-          }
-          return item;
+    axios
+      .put(apiUrl + "/carts/add/" + id, {
+        quantity: 1,
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(() => {
+        setCart((prevState) => {
+          const newCart = prevState.map((item) => {
+            if (item.id === id) {
+              return {
+                ...item,
+                quantity: item.quantity + 1,
+              };
+            }
+            return item;
+          });
+          return newCart;
         });
-        return newCart;
       });
-    });
   };
 
   const handleRemove = (id: number) => {
     axios
-      .put(apiUrl + "/carts/remove/" + id)
+      .put(apiUrl + "/carts/remove/" + id, {
+        headers: {
+          Authorization: token,
+        },
+      })
       .then(() => {
         setCart((prevState) => {
           return prevState.reduce((newCart: CartTypes[], item) => {
